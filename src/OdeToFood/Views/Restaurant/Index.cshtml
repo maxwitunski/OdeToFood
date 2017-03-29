@@ -1,0 +1,38 @@
+﻿@model OdeToFood.ViewModels.RestaurantViewModel
+
+@{
+    ViewBag.Title = "Restaurant";
+}
+
+<h2>Search Results</h2>
+<h2>@Model.CurrentMessage</h2>
+@if (Model.CurrentMessage.Equals("0 results found."))
+{
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Cuisine Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var restaurant in Model.Restaurants)
+            {
+                <tr>
+                    <td>@restaurant.Name</td>
+                    <td>@restaurant.Cuisine</td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <td>
+                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@restaurant.Id">Details</a>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@restaurant.Id">Edit</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
